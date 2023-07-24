@@ -14,7 +14,7 @@
         {% if editCandidate %}
         <img id="image-preview" style="height: 30vh; object-fit:contain" src={{candidate.testField}} alt="your image" />
         {% else %}
-        <img id="image-preview" style="height: 30vh; object-fit:contain" src="{{url_for('static', filename='img/ig.png')}}" alt="your image" />
+        <img id="image-preview" style="height: 20vh; object-fit:contain" src="{{url_for('static', filename='img/user.png')}}" alt="your image" />
         {% endif %}
     </div>      
     <h6 id="error" style="color: red; display: none;">Please upload an image to continue</h6>
