@@ -47,13 +47,7 @@ def load_user(user_id):
 
 
 
-
-def sendtelegram(params):
-    url = "https://api.telegram.org/bot5787281305:AAE1S8DSnMAyQuzAnXOHfxLq-iyvPwYJeAo/sendMessage?chat_id=-1001556929308&text=" + urllib.parse.quote(params)
-    content = urllib.request.urlopen(url).read()
-    print(content)
-    return content
-
+#
 ''''
 #login for admin
 class User:
@@ -358,7 +352,6 @@ def upload_image():
 @app.route('/')
 def index():    
     session['selectedYear'] = "2022"
-    sendtelegram('Current selected Year: ' + session['selectedYear'])
     return render_template('index.html')
 
 @app.route('/addschool' , methods=['GET', 'POST'])
@@ -813,7 +806,7 @@ def signup():
 #user land area
 @app.route('/userlanding')
 def userlanding():
-    sendtelegram("firsttrail")
+    
     return render_template('userlanding.html')
 
 @app.route('/usersignup', methods=['POST','GET'])
@@ -831,7 +824,7 @@ def usersignup():
             db.session.commit()
             login_user(user, remember=True)
             print(current_user)
-            sendtelegram('New User'+ ' ' + current_user.email +' '+ 'Just Signed Up' )
+            
             return redirect(url_for('ulogin'))
         else:
             print(form.errors)
@@ -857,15 +850,15 @@ def ulogin():
             if user and form.password.data == user.password:
                 print(user.email + "validored successfully")
                 login_user(user)
-                sendtelegram(user.email +' '+ user.password +' '+ 'Logged in successfully' )
+                
                 flash ('Welcome, Finish Setting up your profile ' ,'success')
                 return redirect(url_for('useryeargroup'))
                 # next = request.args.get('next')
             else:
                 flash (f'Wrong Password', 'success')
-                sendtelegram(user.email +' '+ 'Entered Wrong Password')
+               # sendtelegram(user.email +' '+ 'Entered Wrong Password')
         else:
-            sendtelegram("BEANS")
+            
             flash (f'Wrong Password', 'danger')
             
             
@@ -882,7 +875,7 @@ def useryeargroup():
 @login_required
 def usernewform():
     print(session['selectedYear'])
-    sendtelegram(current_user.name + " selected Year: " + session['selectedYear'])
+    
     # flash(f'Sample form', 'success')
     schools = School.query.all()
     return render_template('usernewform.html', items=schools, header="Schools / Faculty", smalltitle="2021", name="", numberofentries="16 entries")
@@ -895,7 +888,7 @@ def departments(schoolSlug):
     print(departments)
     print(school)
     print(session['selectedYear'])
-    sendtelegram(current_user.name + " selected Year: " + session['selectedYear'] + " Department " + school.name + ". Found: " + str(len(departments)) + " result(s) ")
+   
     return render_template('userdepartment.html', items=departments, header=school.name, smalltitle="2021", name="", numberofentries="16 entries")
 
 @app.route('/programs/<string:departmentSlug>')
