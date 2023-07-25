@@ -1,6 +1,6 @@
 
 import os
-
+import sqlite3
 import secrets
 import urllib.request, urllib.parse
 from flask_sqlalchemy import SQLAlchemy
@@ -32,7 +32,6 @@ app.config['UPLOADED_PHOTOS_DEST'] ='uploads'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 ma = Marshmallow(app)
-
 
 
 login_manager = LoginManager(app)
@@ -187,7 +186,6 @@ class Program(db.Model,UserMixin):
     def __repr__(self):
         return f"Program('{self.id}', {self.name}'"
     
-    
 
 
 @app.route('/dashboard')
@@ -303,34 +301,58 @@ def graduantsapi():
 @app.route('/addalumni', methods=['GET', 'POST'])
 @login_required
 def addalumni():
-    form=Adduser()
+    form = Adduser()
+
     if form.validate_on_submit():
-  
-            new=User(fullname=form.fullname.data,
-                 indexnumber=form.indexnumber.data,
-                   gender=form.gender.data, 
-                    school=form.school.data,
-                    department=form.department.data,
-                   completed=form.completed.data,
-                   admitted=form.admitted.data,
-                   email=form.email.data,  
-                   telephone=form.telephone.data,  
-                   hall=form.hall.data,  
-                   nationality=form.nationality.data,  
-                   address=form.address.data,  
-                   work=form.work.data,  
-                   guardian=form.guardian.data,  
-                  marital=form.marital.data,
-                  extra=form.extra.data,    
-               image_file=form.image_file.data
-                  )
-       
-            db.session.add(new)
-            db.session.commit()
-            flash("New Alumni Added", "success")
-            return redirect('list')
-    print(form.errors)
+        # Create a new User instance with data from the form
+        new = User(
+            fullname=form.fullname.data,
+            indexnumber=form.indexnumber.data,
+            gender=form.gender.data,
+            school=form.school.data,
+            department=form.department.data,
+            completed=form.completed.data,
+            admitted=form.admitted.data,
+            email=form.email.data,
+            telephone=form.telephone.data,
+            hall=form.hall.data,
+            nationality=form.nationality.data,
+            address=form.address.data,
+            work=form.work.data,
+            guardian=form.guardian.data,
+            marital=form.marital.data,
+            extra=form.extra.data,
+            image_file=form.image_file.data
+        )
+
+        # Connect to the SQLite database and insert the new data
+        try:
+            with sqlite3.connect('test.db') as con:
+                cur = con.cursor()
+                cur.execute("INSERT INTO person(fullname, indexnumber, gender, school, department, completed, admitted, email, telephone, hall, nationality, address, work, guardian, marital, extra, image_file) "
+                            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                            (form.fullname.data, form.indexnumber.data, form.gender.data, form.school.data,
+                             form.department.data, form.completed.data, form.admitted.data, form.email.data,
+                             form.telephone.data, form.hall.data, form.nationality.data, form.address.data,
+                             form.work.data, form.guardian.data, form.marital.data, form.extra.data,
+                             form.image_file.data))
+                con.commit()
+
+        except Exception as e:
+            # Handle any exceptions that may occur during database operations
+            print("Error occurred:", e)
+            flash("An error occurred while adding the alumni.", "danger")
+
+        # Save the new User object to the database using the SQLAlchemy session
+        db.session.add(new)
+        db.session.commit()
+
+        # Redirect to the list page (assuming 'list' is the endpoint for the list of alumni)
+        return redirect('list')
+    
+    # If the form is not submitted or is not valid, render the addAlumni.html template
     return render_template("addAlumni.html", form=form, title='addalumni')
+
 
 
 @app.route('/department', methods=['GET', 'POST'])
