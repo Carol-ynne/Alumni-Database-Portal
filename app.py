@@ -193,11 +193,13 @@ class Program(db.Model,UserMixin):
 @app.route('/dashboard')
 @login_required
 def dashboard():
+    users=User.query.order_by(User.id.desc()).all()
+    print(users)
     # flash(f"There was a problem", 'success')
     if current_user == None:
         flash("Welcome to the CentralAlumina " + current_user.email, "Success")
         flash(f"There was a problem")
-    return render_template('dashboard.html', title='dashboard')
+    return render_template('dashboard.html', title='dashboard',users=users)
 
     eay
 @app.route('/getstudent')
@@ -344,10 +346,7 @@ def current():
 
 
 
-@app.route('/newreport')
 
-def upload_image():
-    return render_template('newreport.html')
 
 @app.route('/')
 def index():    
@@ -396,37 +395,6 @@ def addprogram():
     print(form.errors)
     return render_template('addprogram.html',form=form, programs=programs)
 
-@app.route('/userprofile', methods=['GET', 'POST'])
-def userprofile():
-    form=RegistrationForm()
-    if form.validate_on_submit():
-  
-            new=Person(name=form.name.data,
-                 indexnumber=form.indexnumber.data,
-                   gender=form.gender.data, 
-                    school=form.school.data,
-                    department=form.department.data,
-                   yearCompleted=form.yearCompleted.data,
-                   admitted=form.admitted.data,
-                   email=form.email.data,  
-                   telephone=form.telephone.data,  
-                   hallofresidence=form.hallofresidence.data,  
-                   nationality=form.nationality.data,  
-                   address=form.address.data,  
-                   work=form.work.data,  
-                   guardian=form.guardian.data,  
-                  marital=form.marital.data,
-                  extra=form.extra.data,    
-            
-                  )
-       
-            db.session.add(new)
-            db.session.commit()
-            flash("New Alumni Added", "success")
-            return redirect('information')
-    print(form.errors)
-    return render_template("userprofile.html", form=form, title='addalumni')
- 
 
 
 @app.context_processor
@@ -450,22 +418,12 @@ def search():
 
 
 
-@app.route('/newreport', methods=[ 'POST'])
+@app.route('/newreport', methods=['GET', 'POST'])
 @login_required
 def newreport():
-    form= Adsearch()
-    if request.method == 'POST': 
-        posts =User.query
-        if form.validate_on_submit():
-            postsearched=form.searched.data
-            # posts =posts.filter(User.fullname.like('%'+ postsearched + '%') )
-            #posts =posts.filter(User.indexnumber.like('%'+ postsearched + '%') )
-            posts =posts.filter(User.completed.like('%'+ postsearched + '%') )
-            # posts =posts.filter(User.department.like('%'+ postsearched + '%') )
-            posts =posts.order_by(User.indexnumber).all() 
-            flash("You searched for "+ postsearched, "success")  
-            print(posts)   
-    return render_template("newreport.html", form=form, searched =postsearched, posts=posts)
+    users=User.query.order_by(User.id.desc()).all()
+    print(users)
+    return render_template("newreport.html", users=users)
 
 #search for user
 @app.route('/usersearch', methods=[ 'POST'])
@@ -486,14 +444,16 @@ def usersearch():
 @app.route('/year', methods=['GET', 'POST'])
 @login_required
 def year():
-    form=Addyear()
-    years=Year.query.all()
-    if request.method== 'POST':
-        schools=Year(name=form.data)
-        db.session.add(schools)
-        db.session.commit()
+    
         
-    return render_template('year.html', form=form, title="newschools",years=years)
+    return render_template('year.html')
+
+@app.route('/userprofile/<int:userid>', methods=['GET', 'POST'])
+def userprofile(userid):
+    profile=User.query.get_or_404(userid)
+    print(current_user)
+    return render_template("userprofile.html",current_user=current_user, profile=profile)
+ 
 
 
 
@@ -515,18 +475,13 @@ def lists():
     print(users)
     print(current_user)
     return render_template("list.html", users=users, current_user=current_user, title="list")
- 
 
 
-@app.route('/<int:year>/newschools', methods=['GET', 'POST'])
-def newschools(year ):
-    form=AddSchool()
-    schools=School.query.all()
-    if request.method== 'POST':
-        schools=School(name=form.data)
-        db.session.add(schools)
-        db.session.commit()
-    return render_template('newschools.html', form=form, title="newschools",schools=schools,year=year)
+
+@app.route('/newschools', methods=['GET', 'POST'])
+def newschools( ):
+    
+    return render_template('newschools.html')
 
 
 @app.route('/logout')
@@ -868,8 +823,9 @@ def ulogin():
 @app.route('/useryeargroup', methods=['GET', 'POST'])
 @login_required
 def useryeargroup():  
-    # fetch all departments
-    return render_template("useryeargroup.html", header="Year Group", smalltitle="Central Alumni Platform", name="", numberofentries="16 entries")
+    users=User.query.order_by(User.id.desc()).all()
+    print(users)
+    return render_template("useryeargroup.html", header="Year Group", smalltitle="Central Alumni Platform", name="", numberofentries="16 entries", users=users)
 
 @app.route('/allschools')
 @login_required
@@ -973,3 +929,4 @@ if __name__ == '__main__':
     app.run(host='0.0.0.0', port=4000, debug=True)
     
     
+
