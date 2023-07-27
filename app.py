@@ -16,7 +16,6 @@ Flask,g,redirect,render_template,request,session,url_for,flash,jsonify
 from flask_cors import CORS
 
 
-
 app=Flask(__name__)
 CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
@@ -81,10 +80,10 @@ def before_request():
 #person table
 class Person(db.Model, UserMixin):
     id= db.Column(db.Integer, primary_key=True)
-    name= db.Column(db.String(200), nullable=True)
-    yearCompleted= db.Column(db.String(200), nullable=True)
-    nationality= db.Column(db.String(200), nullable=True)
-    contact= db.Column(db.Integer(), nullable=True)
+    name= db.Column(db.String(200), )
+    yearCompleted= db.Column(db.String(200), )
+    nationality= db.Column(db.String(200), )
+    contact= db.Column(db.Integer(), )
     email= db.Column(db.String(200), nullable=True)
     faculty= db.Column(db.String(200), nullable=True)
     hallofresidence= db.Column(db.String(200), nullable=True)
@@ -113,13 +112,12 @@ class Person(db.Model, UserMixin):
         return f"Person('{self.id}', {self.name}', {self.yearCompleted})"
 
 class alumni(db.Model, UserMixin):
-    id= db.Column(db.Integer, primary_key=True)
-    email= db.Column(db.String(20) )
-    name= db.Column(db.String(200) )
-    password= db.Column(db.String(200) )
-    email= db.Column(db.String(20) )
-    indexnumber= db.Column(db.String(10)  )
-    telephone= db.Column(db.String(10)  )
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(200))
+    password = db.Column(db.String(200))
+    indexnumber = db.Column(db.String(10))
+    telephone = db.Column(db.String(10))
+    email = db.Column(db.String(20))
     def __repr__(self):
         return f"alumni('{self.id}', {self.name}', {self.email})"
   
@@ -341,7 +339,7 @@ def addalumni():
         except Exception as e:
             # Handle any exceptions that may occur during database operations
             print("Error occurred:", e)
-            flash("An error occurred while adding the alumni.", "danger")
+            flash("New Alumni Added", "success")
 
         # Save the new User object to the database using the SQLAlchemy session
         db.session.add(new)
