@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile Update</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>User Profile Update</h1>
+        <form action="{{ url_for('update_profile') }}" method="post">
+            <div class="form-floating mb-3" >
+                {{form.fullname(class="form-control",placeholder="fullname",id="floatingInput")}}
+                <label for="floatingInput" class="text-muted">Full Name</label>
+              </div>
+            
+            
+              <div class="form-floating mb-3">
+                {{form.gender(class="form-control",placeholder="INT/19/01/5837",id="floatingInput")}}
+                <label for="floatingInput" class="text-muted">Gender</label>
+              </div>
+            
+            
+              <div class="form-floating mb-3">
+                {{form.email(class="form-control",placeholder="INT/19/01/5837",id="floatingInput")}}
+                <label for="floatingInput" class="text-muted">E-mail</label>
+              </div>
+            
+            <div class="form-floating mb-3" style="display: none;" >
+                {{form.image_file (class="form-control", id="firebaseLink" )}}
+               
+              </div>
+            
+            <button type="submit">Update Profile</button>
+        </form>
+    </div>
+</body>
+</html>
