@@ -16,6 +16,7 @@ Flask,g,redirect,render_template,request,session,url_for,flash,jsonify
 from flask_cors import CORS
 
 
+
 app=Flask(__name__)
 CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
@@ -31,6 +32,8 @@ app.config['UPLOADED_PHOTOS_DEST'] ='uploads'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 ma = Marshmallow(app)
+
+# helper functions to delete alembic from the codebase
 
 
 login_manager = LoginManager(app)
@@ -323,25 +326,26 @@ def addalumni():
             image_file=form.image_file.data
         )
 
-        # Connect to the SQLite database and insert the new data
-        try:
-            with sqlite3.connect('test.db') as con:
-                cur = con.cursor()
-                cur.execute("INSERT INTO person(fullname, indexnumber, gender, school, department, completed, admitted, email, telephone, hall, nationality, address, work, guardian, marital, extra, image_file) "
-                            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                            (form.fullname.data, form.indexnumber.data, form.gender.data, form.school.data,
-                             form.department.data, form.completed.data, form.admitted.data, form.email.data,
-                             form.telephone.data, form.hall.data, form.nationality.data, form.address.data,
-                             form.work.data, form.guardian.data, form.marital.data, form.extra.data,
-                             form.image_file.data))
-                con.commit()
+        # # Connect to the SQLite database and insert the new data
+        # try:
+        #     with sqlite3.connect('test.db') as con:
+        #         cur = con.cursor()
+        #         cur.execute("INSERT INTO User(fullname, indexnumber, gender, school, department, completed, admitted, email, telephone, hall, nationality, address, work, guardian, marital, extra, image_file) "
+        #                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        #                     (form.fullname.data, form.indexnumber.data, form.gender.data, form.school.data,
+        #                      form.department.data, form.completed.data, form.admitted.data, form.email.data,
+        #                      form.telephone.data, form.hall.data, form.nationality.data, form.address.data,
+        #                      form.work.data, form.guardian.data, form.marital.data, form.extra.data,
+        #                      form.image_file.data))
+        #         con.commit()
+            
 
-        except Exception as e:
-            # Handle any exceptions that may occur during database operations
-            print("Error occurred:", e)
-            flash("New Alumni Added", "success")
+        # except Exception as e:
+        #     # Handle any exceptions that may occur during database operations
+        #     print("Error occurred:", e)
+        #     flash("New Alumni Added", "success")
 
-        # Save the new User object to the database using the SQLAlchemy session
+         # Save the new User object to the database using the SQLAlchemy session
         db.session.add(new)
         db.session.commit()
 
@@ -737,9 +741,9 @@ def login():
     if form.validate_on_submit():
         print("form Validated successfully")
         user = Person.query.filter_by(email = form.email.data).first()
-        print("user:" + user.email + "found")
+       
       
-        print(user.password)
+        
         if user and form.password.data == user.password:
             print(user.email + "validored successfully")
             if user == None:
@@ -946,6 +950,7 @@ def userinformation(userid):
 
 if __name__ == '__main__':
     #DEBUG is SET to TRUE. CHANGE FOR PROD
+  
     app.run(host='0.0.0.0', port=4000, debug=True)
     
     
