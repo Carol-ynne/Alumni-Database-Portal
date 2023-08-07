@@ -520,6 +520,7 @@ def logout():
     return redirect(url_for("login"))
 
 
+
 @app.route('/userlogout')
 @login_required
 def userlogout():
@@ -530,7 +531,6 @@ def userlogout():
         print("Well that didnt work")
     flash('You have been logged out.','danger')
     return redirect(url_for("userlogin"))
-
 @app.route('/report')
 @login_required
 def report():
@@ -743,7 +743,7 @@ def login():
         user = Person.query.filter_by(email = form.email.data).first()
        
       
-        
+        print(user.password)
         if user and form.password.data == user.password:
             print(user.email + "validored successfully")
             if user == None:

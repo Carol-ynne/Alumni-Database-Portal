@@ -29,8 +29,10 @@
     </div>  
 
     <div>
-      <a href="/information" style="color:#000;"><img src="{{ url_for('static', filename='img/icons8-menu-50.png')}}" width = 50%><!-- This displays the "user" icon -->
-      </a>     
+      <button class="btn" style="color: #fff; background: #992621; border: none; margin-left: 3px;" type="logout">
+        <a href="{{url_for('logout')}}" style="text-decoration: none; color: #fff;">Logout</a>
+      </a>   
+    </button>  
     </div>
   </div>
 
