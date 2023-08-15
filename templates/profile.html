@@ -1,24 +1,23 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-   <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-  </head>
-  <body>
+{% extends 'layout.html' %}
+{% block body %}
 
-   
+<div class="row">
+
+    {%for user in users%} 
+
+      <div class="department-item" data-aos="fade-down-left">
+        <a href="{{url_for("profile", userid=user.id)}}" style="text-decoration: none; color: #992621;">
+          <h4 class="names"> {{user.fullname}}</h4>
+          <h6 class="text-muted">{{user.indexnumber}}</h6>
+      </a>
+      </div>
+
+    {% endfor %}  
   
-    
-          <h1 class="title">
-            WELCOME TO YOUR PROFILE DASHBOARD
-          </h1>
-              
-    {%for newentry in persons%}
-    <h4>{{newentry.name}} {{newentry.age}} {{newentry.gender}}<a href="/update/{{newentry.id}}" class="btn btn-outline-secondary btn-sm">update</a>
-       <a href="/delete/{{newentry.id}}" class="btn btn-outline-danger btn-sm">delete</a></h4>
-    {%endfor%}
-          
-          
-  </body>
-</html>
+  
+    </div>
+
+
+
+
+{% endblock body %}

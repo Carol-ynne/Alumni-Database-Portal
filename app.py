@@ -788,6 +788,11 @@ def userlanding():
     
     return render_template('userlanding.html')
 
+@app.route('/userlayout')
+def userlayout():
+    
+    return render_template('userlayout.html')
+
 @app.route('/usersignup', methods=['POST','GET'])
 def usersignup():
     form = Registration()

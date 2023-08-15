@@ -3,22 +3,62 @@
 
 
 {% for item in items %}
+<div class="row" style="justify-content: space-between;">
+    <a href="/department" class="col-md-4 " style="text-decoration: none;">
+      <div class="dashboard-item" data-aos="fade-up" style="display: flex; padding: 35px;">
+        <h6 style="color: #992621;">FACULTY OF ARTS AND SOCIAL SCIENCES</h6>
+        <img src="static/img/FASS.jpg" alt="" width="100%" style="width: 50px; height: 50px; border-radius: 50%; background: #992621;">
+      </div>
+    </a>
 
-<div style="display: flex; border-bottom: 3px solid #f2f2f2; padding: 10px;">
-  <div class="user-pic" style="padding-right: 10px;">
-      <img style="background-color: rgb(218, 107, 51); border-radius:50%" src="static/img/memoji.png" >
-  </div>
-  <div class="user-text">
-      <div>
-          <a href="/userschool" style="text-decoration: none;">
-              <h4>{{item.name}} </h4>
-          </a>
-          <h6 class="text-muted">20 departments</h6>
+    <a href="/department" class="col-md-4" style="text-decoration: none;">
+      <div class="dashboard-item" data-aos="flip-up" data-aos-delay="300" style="display: flex; padding: 35px;">
+        <h6 style="color: #992621;">SCHOOL OF ENGINEERING AND TECHNOLOGY</h6>
+        <img src="static/img/SET1.jpg" alt="" width="100%" style="width: 50px; height: 50px; border-radius: 50%; background: #992621;"> 
       </div>
-      <div>
-          <i class='bx bx-dots-vertical-rounded bx-sm icon'></i>
+    </a>
+
+    <a href="/department" class="col-md-4" style="text-decoration: none;">
+        <div class="dashboard-item" data-aos="fade-up-left" data-aos-delay="600" style="display: flex; padding: 35px;">
+          <h6 style="color: #992621;">SCHOOL OF MEDICINE AND HEALTH SCIENCES</h6>
+          <img src="static/img/PASAG.jpg" alt="" width="100%" style="width: 50px; height: 50px; border-radius: 50%; background: #992621;"> 
+        </div>
+    </a>
+</div>
+
+<div class="row" style="justify-content: space-between;">
+    <a href="/department" class="col-md-4" style="text-decoration: none;">
+        <div class="dashboard-item" data-aos="zoom-in-right" style="display: flex; padding: 35px;">
+          <h6 style="color: #992621;">SCHOOL OF ARCHITECTURE AND DESIGN</h6>
+          <img src="static/img/SADE.jpg" alt="" width="100%" style="width: 50px; height: 50px; border-radius: 50%; background: #992621;"> 
+          
+        </div>
+        
+    </a>
+    
+    <a href="/department" class="col-md-4" style="text-decoration: none;">
+        <div class="dashboard-item" data-aos="zoom-out-up" data-aos-delay="300" style="display: flex; padding: 35px;">
+          <h6 style="color: #992621;">SCHOOL OF PHARMACY</h6>
+          <img src="static/img/PHARMACY.jpg" alt="" width="100%" style="width: 50px; height: 50px; border-radius: 50%; background: #992621;"> 
+        </div>
+    </a>
+    
+    <a href="/department" class="col-md-4" style="text-decoration: none;">
+      <div class="dashboard-item" data-aos="fade-left" data-aos-anchor="#example-anchor" data-aos-offset="500" data-aos-delay="600" style="display: flex; padding: 35px;">
+        <h6 style="color: #992621;">CENTRAL BUSINESS SCHOOL</h6>
+        <img src="static/img/CBS.jpg" alt="" width="100%" style="width: 50px; height: 50px; border-radius: 50%; background: #992621;">  
       </div>
-  </div>
+    </a>
+</div>
+<div class="row" style="justify-content: space-between;">
+    <a href="/department" class="col-md-4" style="text-decoration: none;">
+      <div class="dashboard-item" data-aos="zoom-out-down" style="display: flex; padding: 35px;">
+        <h6 style="color: #992621;">FACULTY OF LAW</h6>
+        <img src="static/img/LAW.jpg" alt="" width="100%" style="width: 50px; height: 50px; border-radius: 50%; background: #992621;">  
+      </div>
+    </a>
+    
+    
 </div>
 {% endfor %}
 
