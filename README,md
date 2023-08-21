@@ -1,0 +1,6 @@
+Navigate to your selected directory after starting the command terminal on your code terminal.
+Type git clone https://github.com/Carol-ynne/Alumni-Database-Portal.git into the command line.
+This will enable you to copy the folder to your own computer.
+Select "Open with terminal" from the context menu by performing a right-click on the folder.
+To launch the program, type "python app.py" into your keyboard.
+To start the program, hold down Ctrl on your keyboard and click "http://127.0.0.1:4000" in the address bar.
